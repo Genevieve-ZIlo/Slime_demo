@@ -4,7 +4,6 @@ Shader "Custom/SoftBodySlime"
     {
         _MainTex ("Texture", 2D) = "white" {}
         _Color ("Color", Color) = (1,1,1,1)  
-        _Displacement ("Displacement Strength", Range(0, 1)) = 0.2
         _Speed ("Speed", Range(0.1, 2)) = 0.5
         _Metallic ("Metallic", Range(0, 1)) = 0.5
         _Smoothness ("Smoothness", Range(0, 1)) = 0.9
@@ -19,7 +18,6 @@ Shader "Custom/SoftBodySlime"
 
         sampler2D _MainTex;
         float4 _Color;  
-        float _Displacement;
         float _Speed;
         float _Metallic;
         float _Smoothness;
@@ -39,10 +37,6 @@ Shader "Custom/SoftBodySlime"
             o.Alpha = c.a;
             o.Metallic = _Metallic;
             o.Smoothness = _Smoothness;
-
-            // Create a noise pattern for vertex displacement
-            float noise = sin(_Time.y * _Speed + IN.worldPos.x + IN.worldPos.z) * _Displacement;
-            o.Normal = o.Normal + float3(0, noise, 0);
         }
         ENDCG
     }
